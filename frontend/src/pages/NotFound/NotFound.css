@@ -1,0 +1,49 @@
+.not-found-page {
+  padding: var(--space-16) 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.not-found-card {
+  text-align: center;
+  padding: var(--space-12) var(--space-8);
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.not-found-badge {
+  font-size: 4rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  line-height: 1;
+  margin-bottom: var(--space-4);
+  letter-spacing: -0.05em;
+}
+
+.not-found-title {
+  font-size: var(--font-size-2xl);
+  font-weight: 800;
+  color: var(--color-text);
+  margin-bottom: var(--space-3);
+}
+
+.not-found-desc {
+  font-size: var(--font-size-base);
+  color: var(--color-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--space-8);
+}
+
+.not-found-actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-4);
+}
+
+@media (max-width: 600px) {
+  .not-found-actions {
+    flex-direction: column;
+  }
+}

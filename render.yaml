@@ -1,8 +1,3 @@
-# ==============================================================================
-# WriteWave Render Blueprint (render.yaml)
-# Single-platform deployment for Backend (Web Service) and Frontend (Static Site)
-# ==============================================================================
-
 services:
   - type: web
     name: writewave-backend
@@ -26,11 +21,12 @@ services:
       - key: JWT_EXPIRES_IN
         value: 7d
 
-staticSites:
-  - name: writewave-frontend
+  - type: web
+    name: writewave-frontend
+    runtime: static
     rootDir: frontend
     buildCommand: npm install && npm run build
-    publishPath: dist
+    staticPublishPath: dist
     routes:
       - type: rewrite
         source: /*

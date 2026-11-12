@@ -1,5 +1,4 @@
 import React from 'react';
-import { AlertCircle, RotateCcw } from 'lucide-react';
 import './ErrorMessage.css';
 
 export const ErrorMessage = ({
@@ -11,7 +10,6 @@ export const ErrorMessage = ({
   return (
     <div className={`error-message-box ${className}`} role="alert">
       <div className="error-message-content">
-        <AlertCircle className="error-message-icon" size={22} aria-hidden="true" />
         <div className="error-message-text">
           <strong className="error-message-title">{title}</strong>
           <p className="error-message-desc">{message}</p>
@@ -19,8 +17,7 @@ export const ErrorMessage = ({
       </div>
       {onRetry && (
         <button type="button" onClick={onRetry} className="btn btn-sm btn-secondary error-retry-btn">
-          <RotateCcw size={14} />
-          <span>Retry</span>
+          Retry
         </button>
       )}
     </div>

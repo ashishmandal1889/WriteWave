@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Eye, EyeOff, AlertCircle } from 'lucide-react';
 import './FormInput.css';
 
 export const FormInput = ({
@@ -93,19 +92,18 @@ export const FormInput = ({
         {isPassword && (
           <button
             type="button"
-            className="password-toggle-btn"
+            className="password-toggle-btn text-toggle-btn"
             onClick={() => setShowPassword((prev) => !prev)}
             aria-label={showPassword ? 'Hide password' : 'Show password'}
             tabIndex={-1}
           >
-            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            {showPassword ? 'Hide' : 'Show'}
           </button>
         )}
       </div>
 
       {error && (
         <div id={errorId} className="form-error-msg" role="alert">
-          <AlertCircle size={14} className="form-error-icon" aria-hidden="true" />
           <span>{error}</span>
         </div>
       )}

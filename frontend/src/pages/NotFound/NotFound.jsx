@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Home, Compass, FileQuestion } from 'lucide-react';
 import './NotFound.css';
 
 export const NotFound = () => {
@@ -15,12 +14,10 @@ export const NotFound = () => {
           </p>
           <div className="not-found-actions">
             <Link to="/" className="btn btn-primary">
-              <Home size={16} />
-              <span>Back to Home</span>
+              Back to Home
             </Link>
             <Link to="/explore" className="btn btn-secondary">
-              <Compass size={16} />
-              <span>Explore Blogs</span>
+              Explore Blogs
             </Link>
           </div>
         </div>

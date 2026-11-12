@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { LogIn, ArrowRight } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import FormInput from '../../components/FormInput/FormInput';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
@@ -22,7 +21,6 @@ export const Login = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [apiError, setApiError] = useState(null);
 
-  // Retrieve origin route if redirected from ProtectedRoute
   const redirectPath = location.state?.from?.pathname || '/my-blogs';
 
   const handleChange = (e) => {
@@ -63,7 +61,7 @@ export const Login = () => {
     } catch (err) {
       const message =
         err.response?.data?.message ||
-        'Unable to connect to authentication server. Please ensure your Spring Boot API is running.';
+        'Unable to connect to authentication server. Please ensure your backend API is running.';
       setApiError(message);
     } finally {
       setIsSubmitting(false);
@@ -124,8 +122,7 @@ export const Login = () => {
               className="btn btn-primary btn-lg auth-submit-btn"
               disabled={isSubmitting}
             >
-              <LogIn size={18} />
-              <span>{isSubmitting ? 'Signing in...' : 'Login'}</span>
+              {isSubmitting ? 'Signing in...' : 'Login'}
             </button>
           </form>
 
@@ -134,7 +131,7 @@ export const Login = () => {
             <p>
               Don't have an account?{' '}
               <Link to="/register" className="auth-switch-link">
-                Sign Up <ArrowRight size={14} />
+                Sign Up
               </Link>
             </p>
           </div>

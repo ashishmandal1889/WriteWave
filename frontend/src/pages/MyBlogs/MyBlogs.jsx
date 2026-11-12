@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Feather, BookOpen, Trash2, Plus, AlertCircle } from 'lucide-react';
 import blogService from '../../services/blogService';
 import BlogCard from '../../components/BlogCard/BlogCard';
 import EmptyState from '../../components/EmptyState/EmptyState';
@@ -27,7 +26,6 @@ export const MyBlogs = () => {
       if (err.response) {
         setError(err.response?.data?.message || 'Failed to load your blogs.');
       } else {
-        // Backend offline / not connected yet
         setBlogs([]);
       }
     } finally {
@@ -75,8 +73,7 @@ export const MyBlogs = () => {
           </div>
 
           <Link to="/create-blog" className="btn btn-primary">
-            <Plus size={16} />
-            <span>Create New Blog</span>
+            Create New Blog
           </Link>
         </div>
 
@@ -107,7 +104,6 @@ export const MyBlogs = () => {
           </div>
         ) : (
           <EmptyState
-            icon={BookOpen}
             title="You haven't published anything yet"
             description="Your author dashboard is empty. Put pen to digital paper and share your unique voice with the WriteWave community!"
             actionText="Create New Blog"
@@ -121,9 +117,6 @@ export const MyBlogs = () => {
         <div className="delete-dialog-overlay" onClick={() => !isDeleting && setDeleteCandidate(null)}>
           <div className="delete-dialog-card card" onClick={(e) => e.stopPropagation()}>
             <div className="delete-dialog-header">
-              <div className="delete-dialog-icon">
-                <Trash2 size={24} />
-              </div>
               <h3 className="delete-dialog-title">Delete this blog?</h3>
             </div>
             <p className="delete-dialog-desc">

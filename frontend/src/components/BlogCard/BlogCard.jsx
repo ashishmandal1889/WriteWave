@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Calendar, Clock, User, Edit3, Trash2, ArrowRight } from 'lucide-react';
 import { formatDate, calculateReadingTime } from '../../utils/formatDate';
 import './BlogCard.css';
 
@@ -54,10 +53,7 @@ export const BlogCard = ({
           {category && (
             <span className="blog-card-category">{category}</span>
           )}
-          <span className="blog-card-read-time">
-            <Clock size={12} />
-            <span>{readingTime}</span>
-          </span>
+          <span className="blog-card-read-time">{readingTime}</span>
         </div>
 
         <h3 className="blog-card-title">
@@ -72,18 +68,9 @@ export const BlogCard = ({
 
         <div className="blog-card-footer">
           <div className="blog-card-meta">
-            <div className="blog-card-author">
-              <div className="author-avatar" aria-hidden="true">
-                <User size={14} />
-              </div>
-              <span className="author-name">{authorDisplay}</span>
-            </div>
-
+            <span className="author-name">{authorDisplay}</span>
             {formattedDate && (
-              <div className="blog-card-date">
-                <Calendar size={13} />
-                <time dateTime={createdAt}>{formattedDate}</time>
-              </div>
+              <time dateTime={createdAt} className="blog-card-date">{formattedDate}</time>
             )}
           </div>
 
@@ -97,8 +84,7 @@ export const BlogCard = ({
                   title="Edit blog"
                   aria-label={`Edit ${title}`}
                 >
-                  <Edit3 size={14} />
-                  <span>Edit</span>
+                  Edit
                 </button>
               )}
               {onDelete && (
@@ -109,15 +95,13 @@ export const BlogCard = ({
                   title="Delete blog"
                   aria-label={`Delete ${title}`}
                 >
-                  <Trash2 size={14} />
-                  <span>Delete</span>
+                  Delete
                 </button>
               )}
             </div>
           ) : (
             <Link to={`/blogs/${blogId}`} className="blog-card-arrow" aria-label={`Read ${title}`}>
-              <span>Read</span>
-              <ArrowRight size={14} />
+              Read
             </Link>
           )}
         </div>

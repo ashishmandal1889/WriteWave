@@ -1,16 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import {
-  Calendar,
-  Clock,
-  User,
-  ArrowLeft,
-  MessageSquare,
-  Send,
-  BookOpen,
-  Share2,
-  Check
-} from 'lucide-react';
 import blogService from '../../services/blogService';
 import { useAuth } from '../../hooks/useAuth';
 import Loading from '../../components/Loading/Loading';
@@ -80,7 +69,6 @@ export const BlogDetails = () => {
         comment: commentText.trim()
       });
 
-      // Append new comment to comments list if returned
       setBlog((prev) => ({
         ...prev,
         comments: [...(prev?.comments || []), newComment || {
@@ -122,7 +110,6 @@ export const BlogDetails = () => {
     return (
       <div className="container-narrow blog-details-empty-wrapper">
         <EmptyState
-          icon={BookOpen}
           title="Blog unavailable"
           description={error || 'The blog article you requested does not exist or has been removed.'}
           actionText="Explore All Blogs"
@@ -147,7 +134,6 @@ export const BlogDetails = () => {
   const formattedDate = formatDate(createdAt);
   const readingTime = calculateReadingTime(content);
 
-  // Split multi-paragraph content safely
   const paragraphs = content.split('\n\n').filter((p) => p.trim());
 
   return (
@@ -156,8 +142,7 @@ export const BlogDetails = () => {
         {/* Top Navigation */}
         <div className="blog-details-nav">
           <Link to="/explore" className="btn btn-ghost btn-sm">
-            <ArrowLeft size={16} />
-            <span>Back to Explore</span>
+            Back to Explore
           </Link>
           <button
             type="button"
@@ -165,8 +150,7 @@ export const BlogDetails = () => {
             className="btn btn-secondary btn-sm"
             aria-label="Share this blog link"
           >
-            {copiedLink ? <Check size={14} /> : <Share2 size={14} />}
-            <span>{copiedLink ? 'Copied Link' : 'Share'}</span>
+            {copiedLink ? 'Copied Link' : 'Share'}
           </button>
         </div>
 
@@ -180,23 +164,13 @@ export const BlogDetails = () => {
 
           <div className="blog-author-bar">
             <div className="author-info">
-              <div className="author-avatar-lg" aria-hidden="true">
-                <User size={18} />
-              </div>
               <div className="author-meta">
                 <span className="author-full-name">{authorDisplay}</span>
                 <div className="blog-meta-sub">
                   {formattedDate && (
-                    <span className="meta-item">
-                      <Calendar size={13} />
-                      <time dateTime={createdAt}>{formattedDate}</time>
-                    </span>
+                    <time dateTime={createdAt} className="meta-item">{formattedDate}</time>
                   )}
-                  <span className="meta-separator">&bull;</span>
-                  <span className="meta-item">
-                    <Clock size={13} />
-                    <span>{readingTime}</span>
-                  </span>
+                  <span className="meta-item">{readingTime}</span>
                 </div>
               </div>
             </div>
@@ -231,8 +205,7 @@ export const BlogDetails = () => {
         <section className="blog-comments-section" aria-labelledby="comments-heading">
           <div className="comments-header">
             <h2 id="comments-heading" className="comments-title">
-              <MessageSquare size={20} />
-              <span>Discussion ({comments.length})</span>
+              Discussion ({comments.length})
             </h2>
           </div>
 
@@ -269,8 +242,7 @@ export const BlogDetails = () => {
                     className="btn btn-primary"
                     disabled={isSubmittingComment || !commentText.trim()}
                   >
-                    <Send size={15} />
-                    <span>{isSubmittingComment ? 'Posting...' : 'Submit Comment'}</span>
+                    {isSubmittingComment ? 'Posting...' : 'Submit Comment'}
                   </button>
                 </div>
               </form>
@@ -290,9 +262,6 @@ export const BlogDetails = () => {
               comments.map((comment, idx) => (
                 <div key={comment.id || idx} className="comment-item card">
                   <div className="comment-item-header">
-                    <div className="comment-author-avatar" aria-hidden="true">
-                      <User size={14} />
-                    </div>
                     <div>
                       <span className="comment-author-name">
                         {comment.authorName || (typeof comment.author === 'object' ? comment.author?.name : comment.author) || 'User'}
@@ -309,7 +278,6 @@ export const BlogDetails = () => {
               ))
             ) : (
               <EmptyState
-                icon={MessageSquare}
                 title="No comments yet"
                 description="Be the first to share your thoughts and start the discussion!"
                 className="comments-empty-state"

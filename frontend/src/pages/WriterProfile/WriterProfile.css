@@ -1,0 +1,133 @@
+.writer-profile-page {
+  padding-bottom: 80px;
+}
+
+.writer-profile-loading,
+.writer-profile-empty {
+  padding: 80px 0;
+}
+
+/* Hero Section */
+.writer-profile-hero {
+  background-color: var(--color-card);
+  border-bottom: 1px solid #E2E8F0;
+  padding: 48px 0 36px;
+}
+
+.writer-hero-inner {
+  display: flex;
+  flex-direction: column;
+}
+
+.writer-fullname {
+  font-size: 2.25rem;
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+
+.writer-handle {
+  font-size: 1rem;
+  color: var(--color-secondary);
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.writer-bio-description {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--color-text);
+  margin-bottom: 24px;
+  max-width: 640px;
+}
+
+/* Stats Row */
+.writer-stats-row {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 16px 0;
+  border-top: 1px solid #F1F5F9;
+  border-bottom: 1px solid #F1F5F9;
+  margin-bottom: 24px;
+}
+
+.writer-stat-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-number {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.stat-label {
+  font-size: 0.8125rem;
+  color: var(--color-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.writer-action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Tabs */
+.writer-tabs-section {
+  border-bottom: 1px solid #E2E8F0;
+  background-color: #FFFFFF;
+}
+
+.writer-tabs-bar {
+  display: flex;
+  gap: 24px;
+}
+
+.writer-tab-btn {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 16px 4px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.writer-tab-btn:hover {
+  color: var(--color-text);
+}
+
+.writer-tab-btn.is-active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+/* Content */
+.writer-content-section {
+  padding-top: 36px;
+}
+
+.writer-articles-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.writer-publications-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+@media (max-width: 640px) {
+  .writer-stats-row {
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+}

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Feather, Image, X, Send, AlertCircle, ArrowLeft } from 'lucide-react';
 import blogService from '../../services/blogService';
 import FormInput from '../../components/FormInput/FormInput';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
@@ -61,7 +60,6 @@ export const CreateBlog = () => {
 
     setIsSubmitting(true);
     try {
-      // Direct call to API service without fake local persistence
       const createdBlog = await blogService.createBlog({
         title: formData.title.trim(),
         category: formData.category,
@@ -69,7 +67,6 @@ export const CreateBlog = () => {
         content: formData.content.trim()
       });
 
-      // If backend successfully creates blog, navigate to its details or dashboard
       const newId = createdBlog?.id || createdBlog?._id;
       if (newId) {
         navigate(`/blogs/${newId}`);
@@ -79,7 +76,7 @@ export const CreateBlog = () => {
     } catch (err) {
       const message =
         err.response?.data?.message ||
-        'Unable to reach backend API to publish blog. Please ensure your Spring Boot server is running.';
+        'Unable to reach backend API to publish blog. Please ensure your backend server is running.';
       setApiError(message);
     } finally {
       setIsSubmitting(false);
@@ -98,8 +95,7 @@ export const CreateBlog = () => {
         {/* Navigation Breadcrumb / Cancel Header */}
         <div className="editor-top-bar">
           <button type="button" onClick={handleCancel} className="btn btn-ghost btn-sm">
-            <ArrowLeft size={16} />
-            <span>Cancel</span>
+            Cancel
           </button>
           <span className="editor-mode-badge">New Story</span>
         </div>
@@ -204,7 +200,6 @@ export const CreateBlog = () => {
               />
               {errors.content && (
                 <div className="form-error-msg" role="alert">
-                  <AlertCircle size={14} className="form-error-icon" aria-hidden="true" />
                   <span>{errors.content}</span>
                 </div>
               )}
@@ -225,8 +220,7 @@ export const CreateBlog = () => {
                 className="btn btn-primary btn-lg"
                 disabled={isSubmitting}
               >
-                <Send size={18} />
-                <span>{isSubmitting ? 'Publishing...' : 'Publish Blog'}</span>
+                {isSubmitting ? 'Publishing...' : 'Publish Blog'}
               </button>
             </div>
           </form>

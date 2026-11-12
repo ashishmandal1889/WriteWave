@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { UserPlus, ArrowRight } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import FormInput from '../../components/FormInput/FormInput';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
@@ -74,7 +73,7 @@ export const Register = () => {
     } catch (err) {
       const message =
         err.response?.data?.message ||
-        'Unable to register account. Please check your network connection and verify your Spring Boot backend API is running.';
+        'Unable to register account. Please check your network connection and verify your backend API is running.';
       setApiError(message);
     } finally {
       setIsSubmitting(false);
@@ -162,8 +161,7 @@ export const Register = () => {
               className="btn btn-primary btn-lg auth-submit-btn"
               disabled={isSubmitting}
             >
-              <UserPlus size={18} />
-              <span>{isSubmitting ? 'Creating account...' : 'Create Account'}</span>
+              {isSubmitting ? 'Creating account...' : 'Create Account'}
             </button>
           </form>
 
@@ -172,7 +170,7 @@ export const Register = () => {
             <p>
               Already have an account?{' '}
               <Link to="/login" className="auth-switch-link">
-                Sign In <ArrowRight size={14} />
+                Sign In
               </Link>
             </p>
           </div>

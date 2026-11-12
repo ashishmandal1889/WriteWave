@@ -1,7 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Feather, Heart } from 'lucide-react';
-import logoSvg from '../../assets/images/writewave-logo.svg';
 import './Footer.css';
 
 export const Footer = () => {
@@ -14,14 +12,13 @@ export const Footer = () => {
           {/* Brand Info */}
           <div className="footer-brand-col">
             <Link to="/" className="footer-brand">
-              <img src={logoSvg} alt="WriteWave Logo" className="footer-logo-img" />
               <span className="brand-name">WriteWave</span>
             </Link>
             <p className="footer-tagline">
-              Share Your Thoughts. Inspire the World.
+              Your Ideas. Your Audience. Your Publication.
             </p>
             <p className="footer-desc">
-              A modern, focused blogging platform designed for creators, thinkers, and avid readers.
+              An independent publishing platform where writers create publications, build direct relationships with subscribers, and distribute newsletters.
             </p>
           </div>
 
@@ -30,28 +27,31 @@ export const Footer = () => {
             <h4 className="footer-heading">Platform</h4>
             <ul className="footer-links-list">
               <li><Link to="/">Home</Link></li>
-              <li><Link to="/explore">Explore Blogs</Link></li>
-              <li><Link to="/create-blog">Start Writing</Link></li>
-              <li><Link to="/my-blogs">My Dashboard</Link></li>
+              <li><Link to="/explore">Explore</Link></li>
+              <li><Link to="/publications">Publications</Link></li>
+              <li><Link to="/write">Start Writing</Link></li>
+              <li><Link to="/dashboard">Writer Dashboard</Link></li>
             </ul>
           </div>
 
-          {/* Quick Access */}
+          {/* Account */}
           <div className="footer-links-col">
             <h4 className="footer-heading">Account</h4>
             <ul className="footer-links-list">
               <li><Link to="/login">Sign In</Link></li>
               <li><Link to="/register">Create Account</Link></li>
+              <li><Link to="/bookmarks">Saved Bookmarks</Link></li>
+              <li><Link to="/subscriptions">My Subscriptions</Link></li>
             </ul>
           </div>
 
-          {/* Tech Readiness Notice */}
+          {/* Architecture Status */}
           <div className="footer-status-col">
-            <h4 className="footer-heading">Architecture</h4>
+            <h4 className="footer-heading">Publishing Engine</h4>
             <div className="footer-status-card">
-              <span className="status-badge">REST API Ready</span>
+              <span className="status-badge">Independent Publishing</span>
               <p className="status-text">
-                Prepared for Spring Boot JWT authentication & MongoDB persistence.
+                Full-stack architecture with Node.js, Express, and MongoDB Atlas.
               </p>
             </div>
           </div>
@@ -59,10 +59,10 @@ export const Footer = () => {
 
         <div className="footer-bottom">
           <p className="footer-copyright">
-            &copy; {currentYear} WriteWave. All rights reserved.
+            Copyright {currentYear} WriteWave. All rights reserved.
           </p>
           <p className="footer-crafted">
-            Built with modern React and clean UI architecture.
+            Clean editorial reading and publishing platform.
           </p>
         </div>
       </div>

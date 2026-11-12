@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Save, AlertCircle, BookOpen } from 'lucide-react';
 import blogService from '../../services/blogService';
 import FormInput from '../../components/FormInput/FormInput';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
@@ -121,7 +120,6 @@ export const EditBlog = () => {
     return (
       <div className="container-narrow" style={{ padding: '60px 0' }}>
         <EmptyState
-          icon={BookOpen}
           title="Blog post not found"
           description="The blog post you are trying to edit could not be found or loaded from the backend."
           actionText="Return to Dashboard"
@@ -136,8 +134,7 @@ export const EditBlog = () => {
       <div className="container-narrow">
         <div className="editor-top-bar">
           <button type="button" onClick={handleCancel} className="btn btn-ghost btn-sm">
-            <ArrowLeft size={16} />
-            <span>Cancel</span>
+            Cancel
           </button>
           <span className="editor-mode-badge">Edit Mode</span>
         </div>
@@ -208,7 +205,6 @@ export const EditBlog = () => {
               />
               {errors.content && (
                 <div className="form-error-msg" role="alert">
-                  <AlertCircle size={14} className="form-error-icon" aria-hidden="true" />
                   <span>{errors.content}</span>
                 </div>
               )}
@@ -228,8 +224,7 @@ export const EditBlog = () => {
                 className="btn btn-primary btn-lg"
                 disabled={isSubmitting}
               >
-                <Save size={18} />
-                <span>{isSubmitting ? 'Saving Changes...' : 'Save Changes'}</span>
+                {isSubmitting ? 'Saving Changes...' : 'Save Changes'}
               </button>
             </div>
           </form>

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { Menu, X, Feather, LogIn, UserPlus, LogOut, LayoutDashboard } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
-import logoSvg from '../../assets/images/writewave-logo.svg';
 import './Navbar.css';
 
 export const Navbar = () => {
@@ -11,7 +9,6 @@ export const Navbar = () => {
   const { user, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
 
-  // Close mobile menu on resize to desktop
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 768) {
@@ -41,12 +38,9 @@ export const Navbar = () => {
   return (
     <header className={`navbar-header ${scrolled ? 'is-scrolled' : ''}`}>
       <div className="container navbar-container">
-        {/* Brand Logo & Name */}
+        {/* WriteWave Brand Name in Plain Text - No decorative symbols */}
         <Link to="/" className="navbar-brand" onClick={closeMenu}>
-          <img src={logoSvg} alt="WriteWave Logo" className="navbar-logo-img" />
-          <div className="navbar-brand-text">
-            <span className="brand-name">WriteWave</span>
-          </div>
+          <span className="brand-name">WriteWave</span>
         </Link>
 
         {/* Desktop Navigation Links */}
@@ -65,10 +59,16 @@ export const Navbar = () => {
             Explore
           </NavLink>
           <NavLink
-            to="/my-blogs"
+            to="/publications"
             className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
           >
-            My Blogs
+            Publications
+          </NavLink>
+          <NavLink
+            to="/search"
+            className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+          >
+            Search
           </NavLink>
         </nav>
 
@@ -76,49 +76,53 @@ export const Navbar = () => {
         <div className="navbar-actions desktop-actions">
           {isAuthenticated ? (
             <div className="auth-profile-group">
-              <Link to="/create-blog" className="btn btn-primary btn-sm">
-                <Feather size={14} />
-                <span>Write</span>
+              <NavLink
+                to="/dashboard"
+                className={({ isActive }) => `btn btn-ghost btn-sm ${isActive ? 'active' : ''}`}
+              >
+                Dashboard
+              </NavLink>
+              <NavLink
+                to="/bookmarks"
+                className={({ isActive }) => `btn btn-ghost btn-sm ${isActive ? 'active' : ''}`}
+              >
+                Bookmarks
+              </NavLink>
+              <Link to="/write" className="btn btn-primary btn-sm">
+                Start Writing
               </Link>
               <button
                 type="button"
                 onClick={handleLogout}
                 className="btn btn-secondary btn-sm"
-                title="Log out"
               >
-                <LogOut size={14} />
-                <span>Logout</span>
+                Logout
               </button>
             </div>
           ) : (
             <div className="auth-btn-group">
               <NavLink
                 to="/login"
-                className={({ isActive }) => `btn btn-ghost btn-sm nav-auth-link ${isActive ? 'active' : ''}`}
+                className={({ isActive }) => `btn btn-ghost btn-sm ${isActive ? 'active' : ''}`}
               >
-                <LogIn size={14} />
-                <span>Login</span>
+                Login
               </NavLink>
-              <NavLink
-                to="/register"
-                className={({ isActive }) => `btn btn-primary btn-sm nav-auth-link ${isActive ? 'active' : ''}`}
-              >
-                <UserPlus size={14} />
-                <span>Sign Up</span>
-              </NavLink>
+              <Link to="/write" className="btn btn-primary btn-sm">
+                Start Writing
+              </Link>
             </div>
           )}
         </div>
 
-        {/* Mobile Hamburger Button */}
+        {/* Mobile Plain Text Toggle Button */}
         <button
           type="button"
-          className="mobile-menu-toggle"
+          className="mobile-menu-text-btn"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-expanded={mobileMenuOpen}
           aria-label="Toggle navigation menu"
         >
-          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          {mobileMenuOpen ? 'Close' : 'Menu'}
         </button>
       </div>
 
@@ -128,16 +132,15 @@ export const Navbar = () => {
           <div className="mobile-drawer" onClick={(e) => e.stopPropagation()}>
             <div className="mobile-drawer-header">
               <Link to="/" className="navbar-brand" onClick={closeMenu}>
-                <img src={logoSvg} alt="WriteWave Logo" className="navbar-logo-img" />
                 <span className="brand-name">WriteWave</span>
               </Link>
               <button
                 type="button"
-                className="mobile-close-btn"
+                className="mobile-close-text-btn"
                 onClick={closeMenu}
                 aria-label="Close menu"
               >
-                <X size={22} />
+                Close
               </button>
             </div>
 
@@ -158,32 +161,55 @@ export const Navbar = () => {
                 Explore
               </NavLink>
               <NavLink
-                to="/my-blogs"
+                to="/publications"
                 onClick={closeMenu}
                 className={({ isActive }) => `mobile-nav-link ${isActive ? 'active' : ''}`}
               >
-                My Blogs
+                Publications
               </NavLink>
+              <NavLink
+                to="/search"
+                onClick={closeMenu}
+                className={({ isActive }) => `mobile-nav-link ${isActive ? 'active' : ''}`}
+              >
+                Search
+              </NavLink>
+              {isAuthenticated && (
+                <>
+                  <NavLink
+                    to="/dashboard"
+                    onClick={closeMenu}
+                    className={({ isActive }) => `mobile-nav-link ${isActive ? 'active' : ''}`}
+                  >
+                    Dashboard
+                  </NavLink>
+                  <NavLink
+                    to="/bookmarks"
+                    onClick={closeMenu}
+                    className={({ isActive }) => `mobile-nav-link ${isActive ? 'active' : ''}`}
+                  >
+                    Bookmarks
+                  </NavLink>
+                </>
+              )}
             </nav>
 
             <div className="mobile-drawer-footer">
               {isAuthenticated ? (
                 <div className="mobile-auth-actions">
                   <Link
-                    to="/create-blog"
+                    to="/write"
                     onClick={closeMenu}
                     className="btn btn-primary mobile-full-btn"
                   >
-                    <Feather size={16} />
-                    <span>Create New Blog</span>
+                    Start Writing
                   </Link>
                   <button
                     type="button"
                     onClick={handleLogout}
                     className="btn btn-secondary mobile-full-btn"
                   >
-                    <LogOut size={16} />
-                    <span>Logout</span>
+                    Logout
                   </button>
                 </div>
               ) : (
@@ -193,16 +219,14 @@ export const Navbar = () => {
                     onClick={closeMenu}
                     className="btn btn-secondary mobile-full-btn"
                   >
-                    <LogIn size={16} />
-                    <span>Login</span>
+                    Login
                   </NavLink>
                   <NavLink
                     to="/register"
                     onClick={closeMenu}
                     className="btn btn-primary mobile-full-btn"
                   >
-                    <UserPlus size={16} />
-                    <span>Sign Up</span>
+                    Sign Up
                   </NavLink>
                 </div>
               )}

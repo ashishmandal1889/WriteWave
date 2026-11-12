@@ -1,5 +1,4 @@
 import React from 'react';
-import { Search, X } from 'lucide-react';
 import './SearchBar.css';
 
 export const SearchBar = ({
@@ -28,7 +27,6 @@ export const SearchBar = ({
   return (
     <form className={`search-bar-form ${className}`} onSubmit={handleSubmit} role="search">
       <div className="search-bar-inner">
-        <Search className="search-bar-icon" size={20} aria-hidden="true" />
         <input
           type="search"
           value={value}
@@ -44,7 +42,7 @@ export const SearchBar = ({
             className="search-bar-clear-btn"
             aria-label="Clear search input"
           >
-            <X size={16} />
+            Clear
           </button>
         )}
       </div>

@@ -7,7 +7,6 @@ export const authService = {
   /**
    * Send login credentials to backend
    * @param {{ email: string, password: string }} credentials
-   * @returns {Promise<{ user: object, token: string }>}
    */
   async login(credentials) {
     const response = await api.post('/auth/login', credentials);
@@ -22,8 +21,7 @@ export const authService = {
 
   /**
    * Register new user account
-   * @param {{ fullName: string, email: string, password: string }} userData
-   * @returns {Promise<{ user: object, token: string, message: string }>}
+   * @param {{ fullName: string, email: string, password: string, username?: string }} userData
    */
   async register(userData) {
     const response = await api.post('/auth/register', userData);
@@ -37,13 +35,13 @@ export const authService = {
   },
 
   /**
-   * Log out the current user session
+   * Log out current user session
    */
   async logout() {
     try {
       await api.post('/auth/logout');
     } catch {
-      // Backend may be stateless JWT; ignore network errors on logout
+      // Ignore network errors on logout
     } finally {
       localStorage.removeItem(TOKEN_KEY);
       localStorage.removeItem(USER_KEY);
@@ -51,25 +49,19 @@ export const authService = {
   },
 
   /**
-   * Fetch current user profile from backend
+   * Fetch current user profile
    */
   async getCurrentUser() {
     const token = localStorage.getItem(TOKEN_KEY);
     if (!token) return null;
     const response = await api.get('/auth/me');
-    return response.data;
+    return response.data?.user || null;
   },
 
-  /**
-   * Check if token is present
-   */
   getToken() {
     return localStorage.getItem(TOKEN_KEY);
   },
 
-  /**
-   * Retrieve cached user profile
-   */
   getStoredUser() {
     const userStr = localStorage.getItem(USER_KEY);
     if (!userStr) return null;

@@ -2,14 +2,14 @@ import axios from 'axios';
 
 /**
  * Axios instance configured with base URL from environment variables
- * and pre-configured interceptors for Spring Boot JWT authentication.
+ * and pre-configured interceptors for JWT authentication.
  */
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api',
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api/v1',
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 10000,
+  timeout: 15000,
 });
 
 // Request Interceptor: Attach JWT Bearer token if available
@@ -28,9 +28,8 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    // If backend returns 401 Unauthorized, clear stored token if expired
     if (error.response && error.response.status === 401) {
-      // Optional: dispatch custom event or let AuthContext handle it
+      // Clear token on 401 Unauthorized if token expired
       localStorage.removeItem('writewave_token');
     }
     return Promise.reject(error);

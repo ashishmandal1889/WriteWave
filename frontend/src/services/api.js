@@ -1,11 +1,27 @@
 import axios from 'axios';
 
 /**
+ * Determine the backend API base URL from environment variables.
+ * Supports VITE_API_URL and VITE_API_BASE_URL, defaulting to local development.
+ */
+const getBaseURL = () => {
+  const envUrl = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL;
+  if (!envUrl) {
+    return 'http://localhost:5000/api/v1';
+  }
+  const cleanUrl = envUrl.trim().replace(/\/+$/, '');
+  if (!cleanUrl.endsWith('/api/v1') && !cleanUrl.includes('/api/')) {
+    return `${cleanUrl}/api/v1`;
+  }
+  return cleanUrl;
+};
+
+/**
  * Axios instance configured with base URL from environment variables
  * and pre-configured interceptors for JWT authentication.
  */
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api/v1',
+  baseURL: getBaseURL(),
   headers: {
     'Content-Type': 'application/json',
   },

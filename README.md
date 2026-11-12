@@ -212,28 +212,73 @@ Open `http://localhost:3000` in your browser.
 
 ---
 
-## 7. Deployment Instructions
+## 7. Render Deployment Instructions (Single Hosting Platform)
 
-### Frontend (Vercel)
+WriteWave is configured for single-platform deployment on **Render**, hosting both the frontend Static Site and backend Web Service.
+
+### Option A: Automated Deployment with Render Blueprints (`render.yaml`)
+
+The repository includes a root `render.yaml` blueprint defining both services and SPA rewrite rules.
+
 1. Push your repository to GitHub.
-2. Import project into Vercel and set the Root Directory to `frontend`.
-3. Framework Preset: `Vite`.
-4. Add Environment Variable:
-   - `VITE_API_BASE_URL`: URL of your deployed backend (e.g. `https://writewave-api.onrender.com/api/v1`)
-5. Deploy.
+2. Go to the [Render Dashboard](https://dashboard.render.com/).
+3. Click **New** > **Blueprint**.
+4. Select your **WriteWave** repository.
+5. Render will detect `render.yaml` and configure both services:
+   - `writewave-backend` (Web Service)
+   - `writewave-frontend` (Static Site)
+6. Fill in the required environment variables:
+   - `MONGODB_URI`: Your MongoDB Atlas connection string (e.g. `mongodb+srv://<username>:<password>@cluster0.mongodb.net/writewave?retryWrites=true&w=majority`)
+   - `CLIENT_URL`: URL of your deployed frontend (e.g. `https://writewave-frontend.onrender.com`)
+   - `VITE_API_URL`: URL of your deployed backend API (e.g. `https://writewave-backend.onrender.com/api/v1`)
+7. Click **Apply**.
 
-### Backend (Render)
-1. Create a **Web Service** on Render pointing to your GitHub repository.
-2. Set Root Directory to `backend`.
-3. Build Command: `npm install`
-4. Start Command: `npm start`
-5. Add Environment Variables:
+---
+
+### Option B: Manual Render Dashboard Setup
+
+#### 1. Deploy the Backend Web Service
+1. In Render Dashboard, click **New** > **Web Service**.
+2. Connect your GitHub repository.
+3. Configure the service settings:
+   - **Name**: `writewave-backend`
+   - **Region**: Select your preferred region (e.g., Oregon / Frankfurt)
+   - **Branch**: `main`
+   - **Root Directory**: `backend`
+   - **Runtime**: `Node`
+   - **Build Command**: `npm install`
+   - **Start Command**: `npm start`
+   - **Health Check Path**: `/api/v1/health`
+4. Add Environment Variables under **Environment**:
    - `NODE_ENV`: `production`
-   - `PORT`: `5000`
-   - `MONGODB_URI`: Your MongoDB Atlas connection URI
-   - `JWT_SECRET`: Secure random string
-   - `CLIENT_URL`: URL of your deployed Vercel frontend
+   - `PORT`: `10000`
    - `API_PREFIX`: `/api/v1`
+   - `MONGODB_URI`: Your MongoDB Atlas connection string
+   - `JWT_SECRET`: A long random secret string (e.g., generated with `openssl rand -hex 32`)
+   - `CLIENT_URL`: Your deployed frontend URL (e.g. `https://writewave-frontend.onrender.com`)
+   - `JWT_EXPIRES_IN`: `7d`
+5. Click **Create Web Service** and wait for deployment to complete.
+6. Copy the assigned service URL (e.g., `https://writewave-backend.onrender.com`).
+
+#### 2. Deploy the Frontend Static Site
+1. In Render Dashboard, click **New** > **Static Site**.
+2. Connect your GitHub repository.
+3. Configure the site settings:
+   - **Name**: `writewave-frontend`
+   - **Branch**: `main`
+   - **Root Directory**: `frontend`
+   - **Build Command**: `npm install && npm run build`
+   - **Publish Directory**: `dist`
+4. Add Environment Variable:
+   - `VITE_API_URL`: `https://writewave-backend.onrender.com/api/v1` (replace with your backend's actual onrender.com URL)
+5. Configure SPA Fallback Routing:
+   - Under **Redirects/Rewrites**:
+     - **Type**: `Rewrite`
+     - **Source**: `/*`
+     - **Destination**: `/index.html`
+   - *(WriteWave also automatically builds `_redirects` in `dist` for full redundancy)*.
+6. Click **Create Static Site**.
+7. Once deployed, copy your frontend URL and ensure it matches the `CLIENT_URL` configured in the backend environment variables.
 
 ---
 

@@ -2,19 +2,33 @@ import config from './environment.js';
 
 export const corsOptions = {
   origin: (origin, callback) => {
-    // Allow requests with no origin (like mobile apps, curl, or server-to-server)
+    // Allow requests with no origin (e.g. server-to-server, curl, Postman, health checks)
     if (!origin) {
       return callback(null, true);
     }
 
-    // Split allowed client URLs (supports comma-separated list if needed)
-    const allowedOrigins = config.clientUrl.split(',').map((url) => url.trim());
+    // Always allow localhost in development
+    if (config.nodeEnv === 'development') {
+      const isLocalhost = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin);
+      if (isLocalhost) {
+        return callback(null, true);
+      }
+    }
 
-    if (allowedOrigins.includes(origin) || config.nodeEnv === 'development') {
+    // Normalize configured client URLs (strip any trailing slashes)
+    const allowedOrigins = config.clientUrl
+      .split(',')
+      .map((url) => url.trim().replace(/\/+$/, ''))
+      .filter(Boolean);
+
+    const normalizedOrigin = origin.trim().replace(/\/+$/, '');
+
+    if (allowedOrigins.includes(normalizedOrigin)) {
       return callback(null, true);
     }
 
-    return callback(new Error(`CORS policy does not allow access from origin ${origin}`));
+    // In non-development mode, block unauthorized origins
+    return callback(new Error(`CORS policy: origin ${origin} is not allowed`));
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
